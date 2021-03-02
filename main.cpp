@@ -5,9 +5,82 @@
 //------------------------------
 
 // Put the assignment code here
+#include <array>
 
-class Quaternion {
+
+
+class Quaternion
+{
+
+public:
+    std::array<double, 4> coefficients;
+
+    Quaternion() : coefficients({0.0, 0.0, 0.0, 0.0}) {};
+    Quaternion(double, double, double, double);
+    bool operator==(const Quaternion&) const;
+    Quaternion operator+(const Quaternion&) const;
+    Quaternion operator-(const Quaternion&) const;
+    Quaternion operator*(const double) const;
+
 };
+
+
+
+
+
+Quaternion::Quaternion(double a, double b, double c, double d)
+{
+    coefficients = {a, b, c, d};
+}
+
+bool Quaternion::operator==(const Quaternion& obj) const
+{
+    return coefficients == obj.coefficients;
+}
+
+Quaternion Quaternion::operator+(const Quaternion& obj) const
+{
+    Quaternion result;
+    int index{ 0 };
+
+    for (const auto& i : coefficients)
+    {
+        result.coefficients[index] = result.coefficients[index] + (i + obj.coefficients[index]);
+        index++;
+    }
+
+    return result;
+}
+
+Quaternion Quaternion::operator-(const Quaternion& obj) const
+{
+    Quaternion result;
+    int index{0};
+
+    for (const auto& i : coefficients)
+    {
+        result.coefficients[index] = result.coefficients[index] + (i - obj.coefficients[index]);
+        index++;
+    }
+
+    return result;
+}
+
+
+Quaternion Quaternion::operator*(const double number) const
+{
+    Quaternion result;
+    int index{ 0 };
+
+    for (const auto& i : coefficients)
+    {
+        result.coefficients[index] = result.coefficients[index] + (i * number);
+        index++;
+    }
+
+    return result;
+}
+
 
 //------------------------------
 //   DO NOT MODIFY TEST CASES
